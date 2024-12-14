@@ -1,10 +1,10 @@
 # **Medicine Recommendation System**
 
 ## **Project Overview**
-Dalam proyek ini, kami membangun sistem rekomendasi medis menggunakan pendekatan *Content-Based Filtering* dan *Collaborative Filtering* untuk membantu pengguna (misalnya, pasien, dokter, apoteker) dalam memberikan rekomendasi obat berdasarkan fitur informasi karakteristik obat yang relevan serta riwayat data pengguna. Sistem ini bertujuan untuk memberikan saran pengobatan yang lebih akurat dengan memperhitungkan data medis pasien dan preferensi obat.
-1. Content-Based Filtering menggunakan dataset "Events" yang berisi informasi tentang efek samping dan kejadian medis yang terkait dengan obat-obatan untuk memberikan rekomendasi berbasis karakteristik obat.
+Dalam proyek ini, kami membangun sistem rekomendasi medis menggunakan pendekatan *Content-Based Filtering* dan *Collaborative Filtering* untuk membantu pengguna, seperti pasien, dokter dan apoteker, dalam memberikan rekomendasi obat berdasarkan fitur karakteristik obat yang relevan serta riwayat data pengguna. Sistem ini bertujuan untuk memberikan saran pengobatan yang lebih akurat dengan memperhitungkan data medis pasien dan preferensi obat.
+1. Content-Based Filtering menggunakan dataset "Events" yang berisi informasi tentang efek samping dan kejadian medis yang terkait dengan obat-obatan. untuk memberikan rekomendasi berbasis karakteristik obat. Metode ini memberikan rekomendasi berbasis karakteristik obat yang sesuai dengan data pasien. Misalnya, sistem dapat menganalisis gejala pasien, durasi penyakit, dan parameter medis lainnya untuk menyarankan obat yang paling relevan [1](https://ieeexplore.ieee.org/document/10673613). Keunggulan metode ini adalah kemampuan memberikan rekomendasi yang dipersonalisasi sesuai dengan profil individu pasien, sehingga meningkatkan relevansi saran pengobatan.
 
-2. Collaborative Filtering menggunakan dataset "Drug Rating" yang berisi rating obat oleh pengguna (pasien) untuk memberikan rekomendasi berdasarkan pola preferensi pengguna lain yang memiliki kondisi medis serupa.
+2. Collaborative Filtering menggunakan dataset "Drug Rating" yang berisi penilaian obat oleh pengguna (pasien). Metode ini memberikan rekomendasi berdasarkan pola preferensi pengguna lain yang memiliki kondisi medis serupa. Sebagai contoh, jika pasien dengan gejala serupa telah berhasil menggunakan obat tertentu, sistem akan merekomendasikan obat tersebut kepada pasien baru yang memiliki profil serupa [2](https://sic.ici.ro/vol-32-no-3-2023/a-hybrid-recommendation-model-for-drug-selection/). Namun, CF dapat menghadapi tantangan seperti kelangkaan data (data sparsity) dan masalah item baru (new item problem), sehingga memerlukan pengoptimalan untuk meningkatkan akurasi [2](https://sic.ici.ro/vol-32-no-3-2023/a-hybrid-recommendation-model-for-drug-selection/).
 
 ## **Business Understanding**
 **Problem Statements**<br>
@@ -21,7 +21,7 @@ Pengguna sering menghadapi tantangan dalam memilih obat yang tepat karena banyak
 ## **Data Understanding**
 **Exploratory Data Analysis (EDA) & Data Visualization**<br>
 
-Sebelum membangun model, perlu dilakukan eksplorasi data untuk memahami struktur dataset dan kualitasnya. Berikut adalah beberapa langkah EDA yang dilakukan:
+Sebelum membangun model, kami melakukan eksplorasi data untuk memahami struktur dataset dan kualitasnya. Berikut adalah beberapa langkah EDA yang dilakukan:
 1. Deskriptif statistik: Melihat ringkasan statistik untuk data numerik (misalnya, rating obat, umur pasien).
 2. Distribusi data: Menilai distribusi rating obat dan efek samping untuk memahami pola umum.
 3. Visualisasi hubungan antar fitur: Melihat korelasi antara fitur (misalnya, rating obat dan efek samping).
@@ -648,14 +648,18 @@ Sistem rekomendasi berbasis collaborative filtering telah berhasil dibuat. Berda
 ## **Evaluation**<br>
 Evaluasi sistem rekomendasi dilakukan untuk mengukur seberapa baik sistem memberikan rekomendasi yang relevan.<br>
 1. Evaluasi Content-Based Filtering
-Content-based filtering menghasilkan skor kesamaan untuk setiap item. Untuk mengevaluasinya, kami menggunakan metrik ```Hit Rate```, yaitu evaluasi dengan cara mengukur seberapa sering item yang relevan muncul dalam daftar rekomendasi teratas.<br>
+Content-based filtering menghasilkan skor kesamaan untuk setiap item. Untuk mengevaluasinya, kami menggunakan metrik ```Hit Rate```, yaitu evaluasi dengan cara mengukur seberapa sering item yang relevan muncul dalam daftar rekomendasi teratas. Hit Rate adalah metrik evaluasi yang digunakan untuk mengukur seberapa sering sistem rekomendasi berhasil memasukkan item yang relevan (dalam hal ini obat) ke dalam daftar rekomendasi yang diberikan kepada pengguna. Dalam konteks Content-Based Filtering, Hit Rate menunjukkan persentase kasus di mana item yang diharapkan (ground truth) muncul di rekomendasi sistem.<br>
 
 $$
-\text{Hit Rate} = \frac{\text{Total Item}}{\text{Jumlah Hits}}
+\text{Hit Rate} = \frac{\text{Jumlah Hits}}{\text{Total Kasus}}
 $$
+
+   Dimana:<br>
+      - Jumlah Hit: Jumlah kasus di mana obat yang relevan (ground truth) ada di daftar rekomendasi.<br>
+      - Total Kasus: Jumlah total evaluasi yang dilakukan (misalnya, jumlah pengguna atau item).
 
 2. Evaluasi Collaborative Filtering
-Collaborative filtering sering dilakukan dengan menggunakan data pembagian train-test. Kami menggunakan ```Root Mean Squared Error (RMSE)```, yaitu evaluasi dengan cara membandingkan prediksi rating dengan rating aktual dari dataset pengujian.<br>
+Collaborative filtering sering dilakukan dengan menggunakan data pembagian train-test. Kami menggunakan ```Root Mean Squared Error (RMSE)```, yaitu evaluasi dengan cara membandingkan prediksi rating dengan rating aktual dari dataset pengujian. RMSE adalah metrik evaluasi yang digunakan untuk mengukur seberapa baik prediksi model mendekati nilai sebenarnya. Dalam konteks sistem rekomendasi obat berbasis collaborative filtering, RMSE menunjukkan seberapa besar rata-rata kesalahan model dalam memprediksi peringkat (ratings) yang diberikan oleh pengguna terhadap obat tertentu. Semakin kecil nilai RMSE, semakin akurat model tersebut.<br>
 Formula RMSE:<br>
 
 $$
@@ -759,8 +763,12 @@ RMSE: 2.03<br>
 Kesalahan rata-rata prediksi rating adalah sekitar 2.03 pada skala 1-10.
 
 Interpretasi:<br>
-- Content-Based Filtering menunjukkan performa yang baik dengan hit rate yang tinggi, artinya rekomendasi cukup akurat untuk item yang mirip.
-- Collaborative Filtering memiliki RMSE yang cukup besar, menunjukkan ruang untuk perbaikan, misalnya dengan memperbaiki data sparsity atau menggunakan algoritma prediksi lain.
+1. Content-Based Filtering
+   - Hasil Hit Rate sebesar 92.5% menunjukkan bahwa sistem rekomendasi berhasil memasukkan obat yang relevan (ground truth) ke dalam daftar rekomendasi sebanyak 92.5% dari total evaluasi. Artinya, sistem berhasil memberikan rekomendasi yang tepat pada mayoritas kasus.
+   - Hasil ini, menunjukkan performa yang baik dengan hit rate yang tinggi, yaitu rekomendasi cukup akurat untuk item yang mirip.
+2. Collaborative Filtering
+   - Hasil RMSE sebesar 2.03 menunjukkan bahwa rata-rata kesalahan prediksi model adalah sekitar 2.03 unit pada skala peringkat 1-10. Maka model sering salah dalam memprediksi rating sebesar ±2 poin dari peringkat yang sebenarnya.
+   - Hasil RMSE yang cukup besar, menunjukkan ruang untuk perbaikan, misalnya dengan memperbaiki data sparsity atau menggunakan algoritma prediksi lain.
 
 
 
