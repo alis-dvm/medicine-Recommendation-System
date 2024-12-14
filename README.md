@@ -2,9 +2,9 @@
 
 ## **Project Overview**
 Dalam proyek ini, kami membangun sistem rekomendasi medis menggunakan pendekatan *Content-Based Filtering* dan *Collaborative Filtering* untuk membantu pengguna, seperti pasien, dokter dan apoteker, dalam memberikan rekomendasi obat berdasarkan fitur karakteristik obat yang relevan serta riwayat data pengguna. Sistem ini bertujuan untuk memberikan saran pengobatan yang lebih akurat dengan memperhitungkan data medis pasien dan preferensi obat.
-1. Content-Based Filtering menggunakan dataset "Events" yang berisi informasi tentang efek samping dan kejadian medis yang terkait dengan obat-obatan. untuk memberikan rekomendasi berbasis karakteristik obat. Metode ini memberikan rekomendasi berbasis karakteristik obat yang sesuai dengan data pasien. Misalnya, sistem dapat menganalisis gejala pasien, durasi penyakit, dan parameter medis lainnya untuk menyarankan obat yang paling relevan [1](https://ieeexplore.ieee.org/document/10673613). Keunggulan metode ini adalah kemampuan memberikan rekomendasi yang dipersonalisasi sesuai dengan profil individu pasien, sehingga meningkatkan relevansi saran pengobatan.
+1. Content-Based Filtering menggunakan dataset "Events" yang berisi informasi tentang efek samping dan kejadian medis yang terkait dengan obat-obatan. untuk memberikan rekomendasi berbasis karakteristik obat. Metode ini memberikan rekomendasi berbasis karakteristik obat yang sesuai dengan data pasien. Misalnya, sistem dapat menganalisis gejala pasien, durasi penyakit, dan parameter medis lainnya untuk menyarankan obat yang paling relevan [[1]](https://ieeexplore.ieee.org/document/10673613). Keunggulan metode ini adalah kemampuan memberikan rekomendasi yang dipersonalisasi sesuai dengan profil individu pasien, sehingga meningkatkan relevansi saran pengobatan.
 
-2. Collaborative Filtering menggunakan dataset "Drug Rating" yang berisi penilaian obat oleh pengguna (pasien). Metode ini memberikan rekomendasi berdasarkan pola preferensi pengguna lain yang memiliki kondisi medis serupa. Sebagai contoh, jika pasien dengan gejala serupa telah berhasil menggunakan obat tertentu, sistem akan merekomendasikan obat tersebut kepada pasien baru yang memiliki profil serupa [2](https://sic.ici.ro/vol-32-no-3-2023/a-hybrid-recommendation-model-for-drug-selection/). Namun, CF dapat menghadapi tantangan seperti kelangkaan data (data sparsity) dan masalah item baru (new item problem), sehingga memerlukan pengoptimalan untuk meningkatkan akurasi [2](https://sic.ici.ro/vol-32-no-3-2023/a-hybrid-recommendation-model-for-drug-selection/).
+2. Collaborative Filtering menggunakan dataset "Drug Rating" yang berisi penilaian obat oleh pengguna (pasien). Metode ini memberikan rekomendasi berdasarkan pola preferensi pengguna lain yang memiliki kondisi medis serupa. Sebagai contoh, jika pasien dengan gejala serupa telah berhasil menggunakan obat tertentu, sistem akan merekomendasikan obat tersebut kepada pasien baru yang memiliki profil serupa [[2]](https://sic.ici.ro/vol-32-no-3-2023/a-hybrid-recommendation-model-for-drug-selection/). Namun, CF dapat menghadapi tantangan seperti kelangkaan data (data sparsity) dan masalah item baru (new item problem), sehingga memerlukan pengoptimalan untuk meningkatkan akurasi [[2]](https://sic.ici.ro/vol-32-no-3-2023/a-hybrid-recommendation-model-for-drug-selection/).
 
 ## **Business Understanding**
 **Problem Statements**<br>
@@ -529,27 +529,33 @@ Pembagian dataset menjadi data pelatihan dan pengujian telah selesai untuk datas
 6. Train-Test Split: Kedua dataset telah dibagi menjadi data pelatihan dan pengujian.<br>
 Data sudah siap untuk digunakan dalam membangun sistem rekomendasi berbasis content-based filtering dan collaborative filtering.
 
-## **Modeling**
-**A. Content-Based Filtering** <br>
-Content-based filtering bekerja dengan cara merekomendasikan item berdasarkan kesamaan fitur dengan item lain. Pada project ini, kami menggunakan informasi efek samping seperti reaksi obat (Reactions) dan kejadian medis atau event (Advent Event) untuk mencari kemiripan antar obat, dengan cara:<br>
-- Vectorize teks dari kolom ```Reactions``` dan ```Advent Event``` menggunakan *TfidfVectorizer*.
-- Menghitung kesamaan antar item (obat) menggunakan *cosine similarity* &.
-- Merekomendasikan obat berdasarkan kemiripan dengan item tertentu.
+## **Modeling**<br>
+Sistem rekomendasi adalah alat penting dalam berbagai domain, termasuk layanan kesehatan, e-commerce, dan hiburan, untuk membantu pengguna menemukan informasi atau item yang relevan. Dua pendekatan utama yang digunakan dalam pengembangan sistem ini adalah *Content-Based Filtering* dan *Collaborative Filtering*. Setiap pendekatan memiliki mekanisme, keunggulan, dan tantangan yang unik, yang penting untuk dipertimbangkan dalam membangun sistem rekomendasi obat.<br>
 
-   - Step 1: Menggabungkan kolom 'Reactions' dan 'Advent Event' sebagai fitur konten
+**A. Content-Based Filtering** <br>
+Content-Based Filtering merekomendasikan item dengan menganalisis atribut item itu sendiri dan mencocokkannya dengan preferensi atau interaksi pengguna sebelumnya.<br>
+1. Mekanisme: Pendekatan ini bergantung pada fitur-fitur item dan profil pengguna. Dalam sistem rekomendasi obat, pendekatan ini dapat menggunakan sifat kimiawi obat dan riwayat medis pasien untuk menyarankan obat yang sesuai [1], [3].
+2. Keunggulan: Pendekatan ini mampu memberikan rekomendasi yang dipersonalisasi berdasarkan atribut spesifik item, yang sangat berguna dalam domain di mana preferensi pengguna terdefinisi dengan baik dan stabil [5].
+3. Tantangan: Content-Based Filtering sering menghadapi keterbatasan dalam analisis konten. Sistem ini cenderung hanya merekomendasikan item yang mirip dengan yang sudah diketahui pengguna, sehingga kurang mampu memberikan rekomendasi yang beragam [3], [6]. <br>
+4. Pada project ini, kami menggunakan informasi efek samping seperti reaksi obat (Reactions) dan kejadian medis atau event (Advent Event) untuk mencari kemiripan antar obat, dengan cara:<br>
+   - Vectorize teks dari kolom ```Reactions``` dan ```Advent Event``` menggunakan *TfidfVectorizer*.
+   - Menghitung kesamaan antar item (obat) menggunakan *cosine similarity* &.
+   - Merekomendasikan obat berdasarkan kemiripan dengan item tertentu.
+
+- Step 1: Menggabungkan kolom 'Reactions' dan 'Advent Event' sebagai fitur konten
   ```
   events_clean['Content'] = events_clean['Reactions'] + " " + events_clean['AdventEvent']
   ```
-   - Step 2: Vectorize teks menggunakan TfidfVectorizer
+- Step 2: Vectorize teks menggunakan TfidfVectorizer
   ```
   tfidf_vectorizer = TfidfVectorizer(stop_words='english')
   tfidf_matrix = tfidf_vectorizer.fit_transform(events_clean['Content'])
   ```
-   - Step 3: Menghitung cosine similarity antar item
+- Step 3: Menghitung cosine similarity antar item
   ```
   cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
   ```
-   - Step 4: Membuat fungsi rekomendasi berdasarkan kesamaan
+- Step 4: Membuat fungsi rekomendasi berdasarkan kesamaan
   ```
   def recommend_content_based(drug_name, cosine_sim=cosine_sim, df=events_clean, top_n=5):
     # Cari indeks dari drug_name
@@ -667,9 +673,9 @@ $$
 $$
 
    Dimana:<br>
-      - $$\( y_i \)$$: Nilai rating aktual. <br>
-      - $$\( \hat{y}_i \)$$: Nilai rating yang diprediksi. <br>
-      - $$\( n \)$$: Jumlah total observasi.
+      - $$\( y_i \)$$: Peringkat aktual yang diberikan oleh pengguna. <br>
+      - $$\( \hat{y}_i \)$$: Peringkat yang diprediksi oleh model. <br>
+      - $$\( n \)$$: Jumlah observasi.
 
 **A. Evaluasi Content-Based Filtering**
 
@@ -773,3 +779,28 @@ Interpretasi:<br>
 
 
 ### **References**
+[1] Aditi, Sarode., Sarang, Dineshrao, Pojage., Kapil, Jajulwar., Snehlata, Dongre., Priya, Maidamwar. (2024). 1. Design of Medicine Recommendation System (MRS) for Biomedical Application Using Machine Learning Techniques.   https://doi10.1109/apcit62007.2024.10673613<br>
+
+[2] Qasem, Kharma., Qusai, Shambour., Abdelrahman, H., Hussein. (2023). 4. A Hybrid Recommendation Model for Drug Selection. Studies in Informatics and Control - ICI Bucharest,  https://doi10.24846/v32i3y202307<br>
+
+[3] <br>
+
+[4] <br>
+
+[5] <br>
+
+[6] <br>
+
+[7] <br>
+
+[8] <br>
+
+[9] <br>
+
+[10]
+
+
+
+
+
+
