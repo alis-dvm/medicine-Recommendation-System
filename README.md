@@ -4,11 +4,11 @@
 Dalam proyek ini, kami membangun sistem rekomendasi medis menggunakan pendekatan *Content-Based Filtering* dan *Collaborative Filtering* untuk membantu pengguna, seperti pasien, dokter dan apoteker, dalam memberikan rekomendasi obat berdasarkan fitur karakteristik obat yang relevan serta riwayat data pengguna. Sistem ini bertujuan untuk memberikan saran pengobatan yang lebih akurat dengan memperhitungkan data medis pasien dan preferensi obat.
 1. Content-Based Filtering menggunakan dataset "Events" yang berisi informasi tentang efek samping dan kejadian medis yang terkait dengan obat-obatan. untuk memberikan rekomendasi berbasis karakteristik obat. Metode ini memberikan rekomendasi berbasis karakteristik obat yang sesuai dengan data pasien. Misalnya, sistem dapat menganalisis gejala pasien, durasi penyakit, dan parameter medis lainnya untuk menyarankan obat yang paling relevan [[1]](https://ieeexplore.ieee.org/document/10673613). Keunggulan metode ini adalah kemampuan memberikan rekomendasi yang dipersonalisasi sesuai dengan profil individu pasien, sehingga meningkatkan relevansi saran pengobatan.
 
-2. Collaborative Filtering menggunakan dataset "Drug Rating" yang berisi penilaian obat oleh pengguna (pasien). Metode ini memberikan rekomendasi berdasarkan pola preferensi pengguna lain yang memiliki kondisi medis serupa. Sebagai contoh, jika pasien dengan gejala serupa telah berhasil menggunakan obat tertentu, sistem akan merekomendasikan obat tersebut kepada pasien baru yang memiliki profil serupa [[2]](https://sic.ici.ro/vol-32-no-3-2023/a-hybrid-recommendation-model-for-drug-selection/). Namun, CF dapat menghadapi tantangan seperti kelangkaan data (data sparsity) dan masalah item baru (new item problem), sehingga memerlukan pengoptimalan untuk meningkatkan akurasi [[2]](https://sic.ici.ro/vol-32-no-3-2023/a-hybrid-recommendation-model-for-drug-selection/).
+2. Collaborative Filtering menggunakan dataset "Drug Rating" yang berisi penilaian obat oleh pengguna (pasien). Metode ini memberikan rekomendasi berdasarkan pola preferensi pengguna lain yang memiliki kondisi medis serupa. Sebagai contoh, jika pasien dengan gejala serupa telah berhasil menggunakan obat tertentu, sistem akan merekomendasikan obat tersebut kepada pasien baru yang memiliki profil serupa [[2]](https://sic.ici.ro/vol-32-no-3-2023/a-hybrid-recommendation-model-for-drug-selection/). Namun, Collaborative Filtering dapat menghadapi tantangan seperti kelangkaan data (data sparsity) dan masalah item baru (new item problem), sehingga memerlukan pengoptimalan untuk meningkatkan akurasi [[2]](https://sic.ici.ro/vol-32-no-3-2023/a-hybrid-recommendation-model-for-drug-selection/).
 
 ## **Business Understanding**
 **Problem Statements**<br>
-Pengguna sering menghadapi tantangan dalam memilih obat yang tepat karena banyaknya pilihan obat yang ada, yang sesuai untuk kondisi medis mereka (mempertimbangkan riwayat medis). Oleh karena itu, penting untuk menciptakan sistem rekomendasi yang dapat membantu pengguna dalam memilih obat yang tepat dan relevan untuk menghindari efek samping berbahaya dan meningkatkan efektivitas pengobatan.
+Pengguna sering menghadapi tantangan dalam memilih obat yang tepat karena banyaknya pilihan obat yang ada, yang sesuai untuk kondisi medis mereka (mempertimbangkan riwayat medis). Oleh karena itu, penting untuk menciptakan sistem rekomendasi yang dapat membantu pengguna dalam memilih obat yang tepat dan relevan untuk menghindari efek samping berbahaya dan meningkatkan efektivitas pengobatan [[3]](https://www.sciencedirect.com/science/article/abs/pii/S0933365724002239).
 
 **Goals**<br>
 1. Mengembangkan sistem rekomendasi medis yang dapat memberikan saran obat yang lebih tepat berdasarkan data medis pasien dan pengalaman pengguna lain.
@@ -26,7 +26,7 @@ Sebelum membangun model, kami melakukan eksplorasi data untuk memahami struktur 
 2. Distribusi data: Menilai distribusi rating obat dan efek samping untuk memahami pola umum.
 3. Visualisasi hubungan antar fitur: Melihat korelasi antara fitur (misalnya, rating obat dan efek samping).
 
-Dalam proyek ini, kami menggunakan 2 dataset yang berasal dari database *drugs.com* dan *druglib.com* yang dapat di akses pada link [ini](https://github.com/DatasetsLibrary/RECOMED?tab=readme-ov-file).
+Dalam proyek ini, kami menggunakan 2 dataset yang berasal dari database *drugs.com* dan *druglib.com* yang dapat di akses pada link [ini](https://github.com/DatasetsLibrary/RECOMED?tab=readme-ov-file) [[3]](https://www.sciencedirect.com/science/article/abs/pii/S0933365724002239).
 
 **A. Dataeset Events**<br>
 **1. Struktur dataset**<br>
@@ -534,14 +534,15 @@ Sistem rekomendasi adalah alat penting dalam berbagai domain, termasuk layanan k
 
 **A. Content-Based Filtering** <br>
 Content-Based Filtering merekomendasikan item dengan menganalisis atribut item itu sendiri dan mencocokkannya dengan preferensi atau interaksi pengguna sebelumnya.<br>
-1. Mekanisme: Pendekatan ini bergantung pada fitur-fitur item dan profil pengguna. Dalam sistem rekomendasi obat, pendekatan ini dapat menggunakan sifat kimiawi obat dan riwayat medis pasien untuk menyarankan obat yang sesuai [1], [3].
-2. Keunggulan: Pendekatan ini mampu memberikan rekomendasi yang dipersonalisasi berdasarkan atribut spesifik item, yang sangat berguna dalam domain di mana preferensi pengguna terdefinisi dengan baik dan stabil [5].
-3. Tantangan: Content-Based Filtering sering menghadapi keterbatasan dalam analisis konten. Sistem ini cenderung hanya merekomendasikan item yang mirip dengan yang sudah diketahui pengguna, sehingga kurang mampu memberikan rekomendasi yang beragam [3], [6]. <br>
-4. Pada project ini, kami menggunakan informasi efek samping seperti reaksi obat (Reactions) dan kejadian medis atau event (Advent Event) untuk mencari kemiripan antar obat, dengan cara:<br>
-   - Vectorize teks dari kolom ```Reactions``` dan ```Advent Event``` menggunakan *TfidfVectorizer*.
-   - Menghitung kesamaan antar item (obat) menggunakan *cosine similarity* &.
-   - Merekomendasikan obat berdasarkan kemiripan dengan item tertentu.
+1. Mekanisme: Pendekatan ini bergantung pada fitur-fitur item dan profil pengguna. Dalam sistem rekomendasi obat, pendekatan ini dapat menggunakan sifat kimiawi obat dan riwayat medis pasien untuk menyarankan obat yang sesuai [[4]](https://ieeexplore.ieee.org/document/10061072), [[5]](https://link.springer.com/chapter/10.1007/978-981-19-5037-7_44).
+2. Keunggulan: Pendekatan ini mampu memberikan rekomendasi yang dipersonalisasi berdasarkan atribut spesifik item, yang sangat berguna dalam domain di mana preferensi pengguna terdefinisi dengan baik dan stabil [[6]](https://media.neliti.com/media/publications/263309-comparing-content-based-and-collaborativ-eb8f08d0.pdf).
+3. Tantangan: Content-Based Filtering sering menghadapi keterbatasan dalam analisis konten. Sistem ini cenderung hanya merekomendasikan item yang mirip dengan yang sudah diketahui pengguna, sehingga kurang mampu memberikan rekomendasi yang beragam [[5]](https://link.springer.com/chapter/10.1007/978-981-19-5037-7_44), [[7]](https://research.ijcaonline.org/volume110/number4/pxc3900760.pdf). <br>
+> Pada project ini, kami menggunakan informasi efek samping seperti reaksi obat (Reactions) dan kejadian medis atau event (Advent Event) untuk mencari kemiripan antar obat, yaitu dengan cara:<br>
+   >- Vectorize teks dari kolom ```Reactions``` dan ```Advent Event``` menggunakan *TfidfVectorizer*.
+   >- Menghitung kesamaan antar item (obat) menggunakan *cosine similarity* &.
+   >- Merekomendasikan obat berdasarkan kemiripan dengan item tertentu.
 
+Detail langkah-langkahnya sebagai berikut:
 - Step 1: Menggabungkan kolom 'Reactions' dan 'Advent Event' sebagai fitur konten
   ```
   events_clean['Content'] = events_clean['Reactions'] + " " + events_clean['AdventEvent']
@@ -595,8 +596,14 @@ Sistem rekomendasi berbasis content-based filtering telah berhasil dibuat. Berda
 
 
 **B. Collaborative Filtering**<br>
-Menggunakan pendekatan *user-based collaborative filtering* berbasis *Nearest Neighbors*, yang fokus pada kesamaan antar pengguna untuk merekomendasikan item (DrugName).<br>
+Collaborative Filtering merekomendasikan item berdasarkan perilaku dan preferensi pengguna lain yang memiliki kesamaan.<br>
+1. Mekanisme: Pendekatan ini menggunakan interaksi antara pengguna dan item, seperti penilaian atau riwayat pembelian, untuk menemukan pola dan menyarankan item yang disukai pengguna serupa. Pendekatan ini tidak memerlukan atribut item secara rinci, sehingga lebih fleksibel untuk berbagai domain [[4]](https://ieeexplore.ieee.org/document/10061072), [[5]](https://link.springer.com/chapter/10.1007/978-981-19-5037-7_44).<br>
+2. Keunggulan: Collaborative Filtering dapat menemukan pola tersembunyi dan memberikan rekomendasi yang lebih beragam dengan memanfaatkan kecerdasan kolektif komunitas pengguna. Pendekatan ini sangat efektif dalam situasi di mana preferensi pengguna tidak didefinisikan secara eksplisit [[6]](https://media.neliti.com/media/publications/263309-comparing-content-based-and-collaborativ-eb8f08d0.pdf), [[8]](https://jurnal.stmik-mi.ac.id/index.php/jcb/article/view/124).<br>
+3. Tantangan: Pendekatan ini menghadapi masalah seperti kelangkaan data (data sparsity), di mana interaksi pengguna-item yang terbatas dapat menghasilkan rekomendasi yang kurang akurat. Selain itu, terdapat masalah cold start, di mana pengguna atau item baru kekurangan data yang cukup untuk menghasilkan rekomendasi yang baik [[4]](https://ieeexplore.ieee.org/document/10061072), [[7]](https://research.ijcaonline.org/volume110/number4/pxc3900760.pdf).<br>
+> Pada project ini, kami menggunakan pendekatan *user-based collaborative filtering* berbasis *Nearest Neighbors*, yang fokus pada kesamaan antar pengguna untuk merekomendasikan item (DrugName).<br>
 
+
+Detail langkah-langkahnya sebagai berikut:
 1. Membuat pivot table dari data untuk collaborative filtering berbasis user-item interaction, yaitu dengan mengunakan kolom 'Gender' sebagai user_id dan 'DrugName' sebagai item_id
   ```
   user_item_matrix = drug_rating_clean.pivot_table(
@@ -779,28 +786,20 @@ Interpretasi:<br>
 
 
 ### **References**
-[1] Aditi, Sarode., Sarang, Dineshrao, Pojage., Kapil, Jajulwar., Snehlata, Dongre., Priya, Maidamwar. (2024). 1. Design of Medicine Recommendation System (MRS) for Biomedical Application Using Machine Learning Techniques.   https://doi10.1109/apcit62007.2024.10673613<br>
+[1] Aditi, Sarode., Sarang, Dineshrao, Pojage., Kapil, Jajulwar., Snehlata, Dongre., Priya, Maidamwar. (2024). Design of Medicine Recommendation System (MRS) for Biomedical Application Using Machine Learning Techniques.   https://doi10.1109/apcit62007.2024.10673613<br>
 
-[2] Qasem, Kharma., Qusai, Shambour., Abdelrahman, H., Hussein. (2023). 4. A Hybrid Recommendation Model for Drug Selection. Studies in Informatics and Control - ICI Bucharest,  https://doi10.24846/v32i3y202307<br>
+[2] Qasem, Kharma., Qusai, Shambour., Abdelrahman, H., Hussein. (2023). A Hybrid Recommendation Model for Drug Selection. Studies in Informatics and Control - ICI Bucharest.  https://doi10.24846/v32i3y202307<br>
 
-[3] <br>
+[3] Mariam, Zomorodi‐Moghadam., Ismail, Ghodsollahee., Jennifer, Martin., Nicholas, J., Talley., Vahid, Salari., Paweł, Pławiak., Kazem, Rahimi., U., Rajendra, Acharya. (2024). RECOMED: A comprehensive pharmaceutical recommendation system. Artificial Intelligence in Medicine.  https://doi10.1016/j.artmed.2024.102981<br>
 
-[4] <br>
+[4] Sandeep, A., Thorat., Gavade, Ashwini., Maneesh, Verma, Seema. (2023). Survey on Collaborative and Content-based Recommendation Systems.   https://doi10.1109/ICSSIT55814.2023.10061072<br>
 
-[5] <br>
+[5] Putta, S., Kulkarni, O. (2022). Analytical Study of Content-Based and Collaborative Filtering Methods for Recommender Systems. In: Singh, P.K., Wierzchoń, S.T., Chhabra, J.K., Tanwar, S. (eds) Futuristic Trends in Networks and Computing Technologies . Lecture Notes in Electrical Engineering, vol 936. Springer, Singapore. https://doi.org/10.1007/978-981-19-5037-7_44<br>
 
-[6] <br>
+[6] Parul, Aggarwal., Vishal, Tomar., Aditya, Kathuria. (2017). Comparing Content Based and Collaborative Filtering in Recommender Systems.  3(4):263309-. International Journal of New Technology and Research. Retrieved from https://research.ijcaonline.org/volume110/number4/pxc3900760.pdf<br>
 
-[7] <br>
+[7] Poonam, B., Thorat., R., M., Goudar., Sunita, Barve. (2015). Survey on Collaborative Filtering, Content-based Filtering and Hybrid Recommendation System. International Journal of Computer Applications.  https://doi10.5120/19308-0760<br>
 
-[8] <br>
-
-[9] <br>
-
-[10]
-
-
-
-
+[8] Wijaya, A., & Alfian, D. (2018). Sistem Rekomendasi Laptop menggunakan Collaborative Filtering dan Content-Based Filtering. Jurnal Computech &Amp; Bisnis (e-Journal), 12(1), 11–27. Retrieved from https://jurnal.stmik-mi.ac.id/index.php/jcb/article/view/124<br>
 
 
