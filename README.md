@@ -8,7 +8,7 @@ Dalam proyek ini, kami membangun sistem rekomendasi medis menggunakan pendekatan
 
 ## **Business Understanding**
 **Problem Statements**<br>
-Pengguna sering menghadapi tantangan dalam memilih obat yang tepat karena banyaknya pilihan obat yang ada, yang sesuai untuk kondisi medis mereka (mempertimbangkan riwayat medis). Oleh karena itu, penting untuk menciptakan sistem rekomendasi yang dapat membantu pengguna dalam memilih obat yang tepat dan relevan untuk menghindari efek samping berbahaya dan meningkatkan efektivitas pengobatan [[3]](https://www.sciencedirect.com/science/article/abs/pii/S0933365724002239).
+Pengguna sering menghadapi tantangan dalam memilih obat yang tepat karena banyaknya pilihan obat yang tersedia. Pemilihan obat yang tidak sesuai dengan kondisi medis pengguna—termasuk riwayat medis mereka—dapat menyebabkan efek samping yang berbahaya dan menurunkan efektivitas pengobatan. Oleh karena itu, diperlukan sistem rekomendasi yang mampu membantu pengguna memilih obat yang relevan, aman, dan efektif [[3]](https://www.sciencedirect.com/science/article/abs/pii/S0933365724002239).
 
 **Goals**<br>
 1. Mengembangkan sistem rekomendasi medis yang dapat memberikan saran obat yang lebih tepat berdasarkan data medis pasien dan pengalaman pengguna lain.
@@ -26,7 +26,7 @@ Sebelum membangun model, kami melakukan eksplorasi data untuk memahami struktur 
 2. Distribusi data: Menilai distribusi rating obat dan efek samping untuk memahami pola umum.
 3. Visualisasi hubungan antar fitur: Melihat korelasi antara fitur (misalnya, rating obat dan efek samping).
 
-Dalam proyek ini, kami menggunakan 2 dataset yang berasal dari database *drugs.com* dan *druglib.com* yang dapat di akses pada link [ini](https://github.com/DatasetsLibrary/RECOMED?tab=readme-ov-file) [[3]](https://www.sciencedirect.com/science/article/abs/pii/S0933365724002239).
+Dalam proyek ini, kami menggunakan 2 dataset yang berasal dari database *drugs.com* dan *druglib.com* yang dapat di akses pada link [ini](https://github.com/DatasetsLibrary/RECOMED?tab=readme-ov-file).
 
 **A. Dataeset Events**<br>
 **1. Struktur dataset**<br>
