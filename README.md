@@ -300,16 +300,468 @@ Grafik pertama menunjukkan bahwa frekuensi rating pengguna relatif meningkat pad
 
 ![Frekuensi Efektivitas Obat Berdasarkan Usia dalam Dataset Drug Rating](https://github.com/user-attachments/assets/bc6f1070-70e0-443a-a567-0e3e3e05d20c)
 
-b. Frekuensi Efektivitas Obat Berdasarkan Usia:
-Grafik kedua menunjukkan bahwa efektivitas obat lebih sering dilaporkan oleh individu yang lebih muda. Ini menunjukkan bahwa pengobatan cenderung lebih efektif pada kelompok usia yang lebih muda, atau mungkin orang yang lebih muda lebih cenderung melaporkan respons positif terhadap pengobatan.
+b. Frekuensi Efektivitas Obat Berdasarkan Usia:<br>
+Grafik kedua menunjukkan bahwa efektivitas obat lebih sering dilaporkan oleh individu yang lebih muda. Ini menunjukkan bahwa pengobatan cenderung lebih efektif pada kelompok usia yang lebih muda, atau mungkin orang yang lebih muda lebih cenderung melaporkan respons positif terhadap pengobatan.<br>
+
+Untuk memudahkan proses dan analisis berikutnya, maka diperlukan pembersihan data pada kolom "Gender" di kedua dataset, yaitu baris data dengan nilai '-' atau NaN. Output dibawah ini, merupakan kolom "Gender" yang masih terdapat baris data dengan nilai '-'.<br>
+```
+(Gender
+ female     1516
+ male        950
+ (3; 2)        4
+ (1; 2)        3
+ (0; 2)        3
+ (12; 2)       2
+ (10; 2)       1
+ (21; 2)       1
+ (6; 2)        1
+ (4; 2)        1
+ (5; 2)        1
+ (13; 2)       1
+ (14; 2)       1
+ (2; 2)        1
+ Name: count, dtype: int64,
+ Gender
+ female    2652
+ male       611
+ Name: count, dtype: int64)
+```
+
+Output kolom "Gender" pada kedua dataset yang sudah dibersihkan dari baris data dengan nilai '-'.<br>
+```
+(Gender
+ female    1516
+ male       950
+ Name: count, dtype: int64,
+ Gender
+ female    2652
+ male       611
+ Name: count, dtype: int64)
+```
+
+**6. Korelasi Jenis Kelamin terhadap Rating Pengguna dan Efektivitas di Dataset Drug Rating**<br>
+
+![Rating Pengguna Berdasarkan Jenis Kelamin dalam Dataset Drug Rating](https://github.com/user-attachments/assets/0e3ca408-1921-4e3a-853c-1a3c5d9d8847)
+
+a. Rating Pengguna Berdasarkan Jenis Kelamin:<br>
+Grafik pertama menunjukkan bahwa wanita lebih cenderung memberikan rating obat dibandingkan pria, dengan frekuensi rating pengguna yang lebih tinggi di kelompok wanita. Ini bisa menunjukkan bahwa wanita mungkin lebih aktif memberikan nilai rating atau lebih cenderung merespon pengalaman penggunaan obat yang dialaminya.<br>
+
+![Efektivitas Obat Berdasarkan Jenis Kelamin dalam Dataset Drug Rating](https://github.com/user-attachments/assets/a792609d-fe65-4593-a8a9-91e004903bfa)
+
+b. Efektivitas Obat Berdasarkan Jenis Kelamin:<br>
+Grafik kedua menunjukkan bahwa wanita lebih sering melaporkan obat sebagai "Sangat Efektif", sementara pria cenderung melaporkan efek yang lebih rendah. Ini mungkin menunjukkan perbedaan persepsi atau respons fisiologis terhadap pengobatan antara pria dan wanita.<br>
+
+**C. Kesimpulan Umum**
+1. Dataset Events:
+     - Mayoritas pasien yang melaporkan reaksi buruk adalah individu dewasa hingga lanjut usia.
+     - Beberapa obat seperti Seroqu cenderung memiliki frekuensi laporan yang lebih tinggi, yang mungkin menunjukkan prevalensi penggunaannya atau ketergantungan pada obat tersebut.
+     - Reaksi yang paling sering dilaporkan adalah "Death", yang bisa mengindikasikan masalah dosis atau pengelolaan obat.
+     - Pada Dataset Events menunjukkan bahwa usia berhubungan dengan meningkatnya frekuensi reaksi buruk dan kejadian serius akibat obat-obatan.<br>
+
+2. Dataset Drug Rating:
+     - Sebagian besar pasien yang dilaporkan dalam dataset ini adalah perempuan, dengan usia yang lebih banyak berada pada rentang dewasa menengah hingga lanjut usia.
+     - Pengguna paling sering menilai dengan rating "10", yang dapat mencerminkan bahwa sebagian besar pasien merasakan manfaat penggunaan obat.
+     - Obat-obat yang dilaporkan memiliki tingkat efektivitas yang cukup tinggi, dengan banyak pasien melaporkan bahwa obat tersebut sangat efektif.
+     - Pada data Dataset Drug Rating mengungkapkan bahwa jenis kelamin berpotensi mempengaruhi persepsi terhadap efektivitas penggunaan obat, dengan wanita melaporkan lebih banyak pengalaman penggunaanya dan menilai obat lebih efektif daripada pria.
+     - Usia juga menunjukkan korelasi dengan rating pengguna yang cenderung turun dan juga penurunan efektivitas obat pada individu yang lebih tua.
+
+## **Data Preparation**
+**A. Detection and Removal Duplicates**<br>
+Sebelum membangun model, kita akan memeriksa duplikasi dalam data dan menghapusnya untuk memastikan data yang digunakan tidak redundan.
+```
+0
+```
+Dari output hasil diatas, dipastikan tidak terdapat duplikasi.
+
+**B. Dropping Uneeded Column**<br>
+Kita akan menghapus kolom yang tidak relevan untuk analisis lebih lanjut.
+1. Dataset Events<br>
+
+|   # | DrugName  | Age  | Gender | Reactions                                               | AdventEvent               |
+|-----|-----------|------|--------|--------------------------------------------------------|---------------------------|
+|   1 | Abilify   | 63   | male   | Drug Level Increased                                   | NaN                       |
+|   2 | Abilify   | 55   | male   | Thyroid Cancer                                        | NaN                       |
+|   3 | Abilify   | 63   | male   | Completed Suicide; Suicide Attempt; Coma              | death; hospitalization    |
+|   4 | Abilify   | 31   | male   | Eosinophilic Pneumonia; Pulmonary Alveolar Haemorrhage | death                     |
+|   5 | Abilify   | 75   | female | Lymphopenia; Anaemia; Neutropenia                     | hospitalization           |
+
+Pada dataset Events kami memasukkan semua 5 variabel kolom, yaitu:<br>
+  - ```DrugName```
+  - ```Age```
+  - ```Gender```
+  - ```Reactions```
+  - ```AdventEvent```
+
+2. Dataset Drug Rating<br>
+
+|   # | DrugName    | Age  | Gender  | Condition Reason        | OverallRating | Effectiveness      | SideEffect            |
+|-----|-------------|------|---------|-------------------------|---------------|--------------------|-----------------------|
+|   1 | Mirtazapine | 22   | male    | Depression              | 1             | Ineffective        | Severe Side Effects   |
+|   2 | Mirtazapine | 38   | male    | Clinical Depression     | 2             | Ineffective        | Moderate Side Effects |
+|   3 | Mirtazapine | 30   | female  | Chronic insomnia        | 9             | Highly Effective   | Moderate Side Effects |
+
+Pada dataset Drug Rating kami hanya memasukkan 7 variabel kolom yang relevan untuk proses selanjutnya, yaitu:<br>
+  - ```DrugName```
+  - ```Age```
+  - ```Gender```
+  - ```ConditionReason```
+  - ```OveralRating```
+  - ```Effectiveness```
+  - ```SideEffect```
+
+**C. Handle Missing Value**<br>
+Kita juga perlu menangani nilai yang hilang dalam data, baik dengan mengisi nilai yang hilang atau menghapus baris yang mengandung nilai yang hilang. Berikut hasil cek missing value pada kedua dataset:<br>
+```
+(DrugName         0
+ Age              0
+ Gender           0
+ Reactions        0
+ AdventEvent    985
+ dtype: int64,
+ DrugName           0
+ Age                0
+ Gender             0
+ ConditionReason    2
+ OverallRating      0
+ Effectiveness      0
+ SideEffect         0
+ dtype: int64)
+```
+
+- Pada dataset Events, pada kolom ```AdventEvent``` terdapat 985 baris missing value. Kami akan menangani kolom ini, dengan memperhitungkan nilainya (seperti mean atau mode), pada baris yang nilainya hilang.
+- Untuk dataset Drug Rating, pada kolom ```ConditionReason``` terdapat 2 missing value. Kami akan menangani kolom ini, dengan menghapus baris tersebut jika perlu. Berikut hasilnya setelah penanganan missing value pada kedua dataset:
+
+```
+(DrugName       0
+ Age            0
+ Gender         0
+ Reactions      0
+ AdventEvent    0
+ dtype: int64,
+ DrugName           0
+ Age                0
+ Gender             0
+ ConditionReason    0
+ OverallRating      0
+ Effectiveness      0
+ SideEffect         0
+ dtype: int64)
+```
+
+- Dataset Events: Kolom ```Advent Event``` yang memiliki 985 nilai yang hilang, kami lakukan imputasi nilai yang hilang tersebut dengan nilai modus (nilai yang paling sering muncul), karena ini terkait dengan kejadian medis pengobatan, yang kemungkinan memiliki nilai yang lebih dominan. Berdasarkan output diatas pada dataset Events, saat ini tidak ada missing value.
+- Dataset Drug Rating: Kolom ``` ConditionReason``` memiliki 2 nilai hilang, kami menghapus baris yang memiliki nilai hilang tersebut, karena mungkin data ini tidak terlalu penting untuk analisis lebih lanjut. Berdasarkan output diatas pada dataset Drug Eating, saat ini tidak ada missing value.
+
+**D. Outliers Detection and Removal**<br>
+Outliers dapat mempengaruhi kualitas model, oleh karena itu kami akan mendeteksi dan menghapus outliers dari dataset. Langkah ini akan di lakukan pada kolom yang mengandung data numerik yaitu ```Age``` dan ```OverallRating```, apakah ada outliers yang signifikan dalam kedua kolom tersebut dan menghapusnya jika perlu.<br>
+
+![Distribusi outlier](https://github.com/user-attachments/assets/ed182395-b0e1-405d-b313-bfd51cb9035e)
+
+Dari boxplot yang ditampilkan, kita dapat melihat beberapa hal:<br>
+- Distribusi Umur (Age): Terdapat beberapa nilai ekstrem (outliers) pada kolom ```Age``` yang bisa jadi tidak realistis atau relevan (misalnya, nilai yang sangat rendah atau sangat tinggi). Kami akan membatasi nilai ```Age``` dalam rentang yang realistis (misalnya, 18 hingga 100 tahun) dan menghapus nilai yang berada di luar rentang tersebut.
+- Distribusi Rating (OverallRating): Ada beberapa outliers di kolom ```OverallRating```, meskipun tidak se-ekstrem pada kolom ```Age```. Kami akan akan memeriksa apakah nilai rating yang lebih tinggi atau lebih rendah dari kisaran normal (misalnya, 1 hingga 10) dan menghapus atau mengganti nilai yang tidak sesuai.
+
+```
+(  DrugName  Age  Gender                                          Reactions  \
+ 0  Abilify   63    male                               Drug Level Increased   
+ 1  Abilify   55    male                                     Thyroid Cancer   
+ 2  Abilify   63    male           Completed Suicide; Suicide Attempt; Coma   
+ 3  Abilify   31    male   Eosinophilic Pneumonia; Pulmonary Alveolar Ha...   
+ 4  Abilify   75  female                  Lymphopenia; Anaemia; Neutropenia   
+ 
+                 AdventEvent  
+ 0           hospitalization  
+ 1           hospitalization  
+ 2   death;  hospitalization  
+ 3                     death  
+ 4           hospitalization  ,
+        DrugName Age  Gender                   ConditionReason  OverallRating  \
+ 2  Mirtazapine   22    male                        Depression            1.0   
+ 3  Mirtazapine   38    male               Clinical Depression            2.0   
+ 4  Mirtazapine   30  female                  Chronic insomnia            9.0   
+ 5  Mirtazapine   19  female  Depression; Anxiety; OCD; Nausea            2.0   
+ 6  Mirtazapine    -       -                  Anxiety/insomnia            6.0   
+ 
+       Effectiveness             SideEffect  
+ 2       Ineffective    Severe Side Effects  
+ 3       Ineffective  Moderate Side Effects  
+ 4  Highly Effective  Moderate Side Effects  
+ 5       Ineffective      Mild Side Effects  
+ 6       Ineffective  Moderate Side Effects  )
+```
+
+Berdasarkan output diatas, outliers telah berhasil dihapus dari kedua dataset:<br>
+- Dataset Events: Nilai ```Age``` yang berada di luar rentang 18-100 tahun telah dihapus.
+- Dataset Drug Rating: Nilai ```OverallRating``` yang berada di luar rentang 1-10 telah dihapus.
+
+**E. Encoding**<br>
+Untuk menggunakan algoritma berbasis matriks, kita perlu mengonversi data kategorikal menjadi numerik.
+
+```
+# Mengonversi nama obat & gender menjadi angka untuk Collaborative Filtering
+le = LabelEncoder()
+drug_rating_clean['DrugName_encoded'] = le.fit_transform(drug_rating_clean['DrugName'])
+drug_rating_clean['Gender_encoded'] = le.fit_transform(drug_rating_clean['Gender'])
+
+# Mengonversi nama obat dan gender menjadi angka untuk Content-Based Filtering
+events_clean['DrugName_encoded'] = le.fit_transform(events_clean['DrugName'])
+events_clean['Gender_encoded'] = le.fit_transform(events_clean['Gender'])
+```
+
+Menangani encoding untuk kolom kategori ```Gender``` dan ```DrugName```, dengan mengonversinya menjadi format numerik untuk digunakan dalam proses selanjutnya, yaitu membangun model sistem rekomendasi.<br>
+
+**F. Train Test Split**<br>
+Membagi data menjadi set pelatihan dan set pengujian untuk evaluasi model.<br>
+
+```
+((2597, 9), (650, 9))
+```
+
+Pembagian dataset menjadi data pelatihan dan pengujian telah selesai untuk dataset Drug Rating:<br>
+- Data Pelatihan: 2597 sampel<br>
+- Data Pengujian: 650 sampel
+
+**G. Ringkasan Proses Data Preparation:**<br>
+1. Deteksi dan Penghapusan Duplikasi: Telah dilakukan pada kedua dataset.
+2. Pembuangan Kolom yang Tidak Diperlukan: Kolom yang tidak relevan telah dihapus dari kedua dataset.
+3. Penanganan Nilai Hilang: Nilai hilang diimputasi atau dihapus sesuai kebutuhan.
+4. Deteksi dan Penghapusan Outliers: Outliers pada kolom ```Age``` (di dataset Events) dan ```OverallRating``` (di dataset Drug Rating) telah dihapus.
+5. Encoding: Kolom kategorikal seperti ```Gender``` dan ```DrugName``` telah di-encode menjadi format numerik.
+6. Train-Test Split: Kedua dataset telah dibagi menjadi data pelatihan dan pengujian.<br>
+Data sudah siap untuk digunakan dalam membangun sistem rekomendasi berbasis content-based filtering dan collaborative filtering.
+
+## **Modeling**
+**A. Content-Based Filtering** <br>
+Content-based filtering bekerja dengan cara merekomendasikan item berdasarkan kesamaan fitur dengan item lain. Pada project ini, kami menggunakan informasi efek samping seperti reaksi obat (Reactions) dan kejadian medis atau event (Advent Event) untuk mencari kemiripan antar obat, dengan cara:<br>
+- Vectorize teks dari kolom ```Reactions``` dan ```Advent Event``` menggunakan *TfidfVectorizer*.
+- Menghitung kesamaan antar item (obat) menggunakan *cosine similarity* &.
+- Merekomendasikan obat berdasarkan kemiripan dengan item tertentu.
+
+   - Step 1: Menggabungkan kolom 'Reactions' dan 'Advent Event' sebagai fitur konten
+  ```
+  events_clean['Content'] = events_clean['Reactions'] + " " + events_clean['AdventEvent']
+  ```
+   - Step 2: Vectorize teks menggunakan TfidfVectorizer
+  ```
+  tfidf_vectorizer = TfidfVectorizer(stop_words='english')
+  tfidf_matrix = tfidf_vectorizer.fit_transform(events_clean['Content'])
+  ```
+   - Step 3: Menghitung cosine similarity antar item
+  ```
+  cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
+  ```
+   - Step 4: Membuat fungsi rekomendasi berdasarkan kesamaan
+  ```
+  def recommend_content_based(drug_name, cosine_sim=cosine_sim, df=events_clean, top_n=5):
+    # Cari indeks dari drug_name
+    idx = df[df['DrugName_encoded'] == drug_name].index[0]
+    
+    # Mendapatkan skor kesamaan untuk semua obat dengan obat ini
+    sim_scores = list(enumerate(cosine_sim[idx]))
+    
+    # Mengurutkan obat berdasarkan skor kesamaan (descending)
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    
+    # Mengambil top_n obat yang mirip (kecuali dirinya sendiri)
+    sim_scores = sim_scores[1:top_n+1]
+    
+    # Mengambil indeks obat yang mirip
+    drug_indices = [i[0] for i in sim_scores]
+    
+    # Return nama obat yang direkomendasikan
+    return df.iloc[drug_indices][['DrugName', 'Reactions', 'AdventEvent']]
+  ```
+
+Contoh sistem rekomendasi content based untuk obat *Abilify*<br>
+```
+recommendations = recommend_content_based(events_clean[events_clean['DrugName'] == "Abilify"]['DrugName_encoded'].iloc[0], top_n=5)
+recommendations
+```
+
+|   #   | DrugName  | Reactions                                                   | AdventEvent                       |
+|-------|-----------|-------------------------------------------------------------|-----------------------------------|
+| 2468  | Zyprexa   | Drug Level Increased                                        | hospitalization                   |
+| 688   | Dilantin  | Accident; Drug Level Increased; Pain; Injury;               | hospitalization                   |
+| 927   | Keppra    | Accident; Drug Level Increased; Pain; Injury;               | hospitalization                   |
+| 1187  | Morphin   | Myoclonus; Drug Level Increased; Drug Interaction;          | life threatening event; hospitalization |
+| 662   | Diazepam  | Drug Level Above Therapeutic; Psychotic Disorder;           | hospitalization                   |
+
+Sistem rekomendasi berbasis content-based filtering telah berhasil dibuat. Berdasarkan output diatas, hasil rekomendasi untuk obat *Abilify*, berdasarkan kesamaan pada reaksi obat dan event. Sistem berhasil memberikan rekomendasi obat yang memiliki kesamaan dalam reaksi yang dialami pasien dan event yang terjadi (hospitalization/ rawat inap).<br>
+
+
+**B. Collaborative Filtering**<br>
+Menggunakan pendekatan *user-based collaborative filtering* berbasis *Nearest Neighbors*, yang fokus pada kesamaan antar pengguna untuk merekomendasikan item (DrugName).<br>
+
+1. Membuat pivot table dari data untuk collaborative filtering berbasis user-item interaction, yaitu dengan mengunakan kolom 'Gender' sebagai user_id dan 'DrugName' sebagai item_id
+  ```
+  user_item_matrix = drug_rating_clean.pivot_table(
+    index='Gender', columns='DrugName_encoded', values='OverallRating', fill_value=0
+  )
+  ```
+   Matriks ini merepresentasikan pengguna (Gender) pada baris dan item (DrugName) pada kolom dengan nilai (OverallRating) sebagai interaksinya.<br>
+
+2. Menghitung kesamaan antar pengguna (user-based collaborative filtering)
+  ```
+  user_similarity = cosine_similarity(user_item_matrix)
+  user_similarity_df = pd.DataFrame(user_similarity, index=user_item_matrix.index, columns=user_item_matrix.index)
+  ```
+   Menggunakan cosine similarity (salah satu metode utama dalam algoritma nearest neighbors), tingkat kesamaan dihitung antar pengguna untuk membuat matriks kesamaan.
+
+3. Membuat fungsi untuk merekomendasikan obat berbasis collaborative filtering
+  ```
+  def recommend_user_based(user_id, user_item_matrix, user_similarity_df, top_n=5):
+    # Mendapatkan skor kesamaan user
+    user_gender = 'female' if user_id == 0 else 'male'
+    similar_users = user_similarity_df[user_gender].sort_values(ascending=False)
+    
+    # Mengambil pengguna yang paling mirip
+    similar_users = similar_users[1:]  # Hindari kesamaan dengan diri sendiri
+    
+    # Mendapatkan rekomendasi item berdasarkan pengguna yang mirip
+    recommendations = user_item_matrix.loc[similar_users.index].mean(axis=0)
+    recommendations = recommendations.sort_values(ascending=False)
+    
+    # mengambil top_n rekomendasi item
+    top_recommendations = recommendations.head(top_n)
+    
+    return top_recommendations
+  ```
+   - Menyusun rekomendasi berdasarkan rata-rata preferensi dari pengguna yang mirip (similar_users).
+   - Mengabaikan pengguna itu sendiri dalam perhitungan (baris similar_users[1:]).
+   - Mengurutkan item berdasarkan skor rata-rata dan mengambil top_n rekomendasi.
+
+Contoh rekomendasi berbasis collaborative filtering untuk user dengan ID 1<br>
+```
+recommendations_user_based = recommend_user_based(user_id=1, user_item_matrix=user_item_matrix, user_similarity_df=user_similarity_df, top_n=5)
+recommendations_user_based
+```
+
+| DrugName_encoded | Score     |
+|------------------|-----------|
+| 162              | 8.842105 |
+| 225              | 8.800000 |
+| 1                | 8.727273 |
+| 163              | 8.633333 |
+| 151              | 8.558824 |
+
+Sistem rekomendasi berbasis collaborative filtering telah berhasil dibuat. Berdasarkan output diatas, rekomendasi obat untuk pengguna dengan ID tertentu (dalam hal ini user 1) berdasarkan rata-rata rating dari pengguna lain yang mirip<br>
+
+## **Evaluation**<br>
+Evaluasi sistem rekomendasi dilakukan untuk mengukur seberapa baik sistem memberikan rekomendasi yang relevan.<br>
+1. Evaluasi Content-Based Filtering
+Content-based filtering menghasilkan skor kesamaan untuk setiap item. Untuk mengevaluasinya, kami menggunakan metrik ```Hit Rate```, yaitu evaluasi dengan cara mengukur seberapa sering item yang relevan muncul dalam daftar rekomendasi teratas.<br>
+
+$$
+\text{Hit Rate} = \frac{\text{Total Item}}{\text{Jumlah Hits}}
+$$
+
+2. Evaluasi Collaborative Filtering
+Collaborative filtering sering dilakukan dengan menggunakan data pembagian train-test. Kami menggunakan ```Root Mean Squared Error (RMSE)```, yaitu evaluasi dengan cara membandingkan prediksi rating dengan rating aktual dari dataset pengujian.<br>
+Formula RMSE:<br>
+
+$$
+\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^n (y_i - \hat{y}_i)^2}
+$$
+
+   Dimana:<br>
+      - $$\( y_i \)$$: Nilai rating aktual. <br>
+      - $$\( \hat{y}_i \)$$: Nilai rating yang diprediksi. <br>
+      - $$\( n \)$$: Jumlah total observasi.
+
+**A. Evaluasi Content-Based Filtering**
+
+```
+# Evaluasi Content-Based Filtering
+def evaluate_content_based(df, cosine_sim, ground_truth_col='AdventEvent', top_n=5):
+    """
+    Evaluates content-based filtering using hit rate.
+    
+    Parameters:
+    - df: DataFrame containing the original data.
+    - cosine_sim: Cosine similarity matrix.
+    - ground_truth_col: Column containing ground truth for evaluation.
+    - top_n: Number of top recommendations to consider.
+    
+    Returns:
+    - Hit rate: Percentage of cases where ground truth is found in the top-N recommendations.
+    """
+    hits = 0
+    for idx in range(len(df)):
+        # Generate recommendations untuk each item
+        sim_scores = list(enumerate(cosine_sim[idx]))
+        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+        sim_scores = sim_scores[1:top_n+1]  # Exclude self-similarity
+        recommended_indices = [i[0] for i in sim_scores]
+        
+        # Cek jika ground truth exists pada recommendations
+        ground_truth = df.iloc[idx][ground_truth_col]
+        recommendations = df.iloc[recommended_indices][ground_truth_col].values
+        if ground_truth in recommendations:
+            hits += 1
+    
+    hit_rate = hits / len(df)
+    return hit_rate
+
+# Hit rate evaluation untuk content-based filtering
+content_based_hit_rate = evaluate_content_based(events_clean, cosine_sim, ground_truth_col='AdventEvent', top_n=5)
+```
+
+**B. Evaluasi Collaborative Filtering**
+
+```
+# Evaluasi Collaborative Filtering
+def evaluate_collaborative_filtering(predictions, test_data):
+    """
+    Evaluates collaborative filtering using RMSE.
+    
+    Parameters:
+    - predictions: Predicted ratings.
+    - test_data: Actual test data for validation.
+    
+    Returns:
+    - RMSE: Root Mean Squared Error.
+    """
+    mse = np.mean([(pred.est - pred.r_ui) ** 2 for pred in predictions])
+    rmse = np.sqrt(mse)
+    return rmse
+
+# Adjust collaborative filtering evaluation menggunakan nearest neighbor-based prediction
+# Ensure user similarity matrix aligns with user-item matrix
+adjusted_user_similarity = user_similarity[:len(user_item_matrix), :len(user_item_matrix)]
+
+# Predict ratings menggunakan similarity-weighted approach
+predicted_ratings_matrix = adjusted_user_similarity.dot(user_item_matrix) / np.abs(adjusted_user_similarity).sum(axis=1).reshape(-1, 1)
+
+# Flatten predictions & true ratings untuk RMSE calculation
+actual_ratings_flat = user_item_matrix.values.flatten()
+predicted_ratings_flat = predicted_ratings_matrix.flatten()
+
+# Filter out zeros (unrated items)
+mask = actual_ratings_flat > 0
+actual_ratings_filtered = actual_ratings_flat[mask]
+predicted_ratings_filtered = predicted_ratings_flat[mask]
+
+# Kalkulasi RMSE
+collaborative_rmse = np.sqrt(mean_squared_error(actual_ratings_filtered, predicted_ratings_filtered))
+```
+
+**C. Hasil evaluasi kedua sistem rekomendasi:**
+
+```
+(0.9250106518960375, 2.031441256960782)
+```
+
+- Content-Based Filtering:<br>
+Hit Rate: 92.5 %<br>
+Sistem berhasil merekomendasikan item yang relevan dalam 92.5 % kasus.
+
+- Collaborative Filtering:<br>
+RMSE: 2.03<br>
+Kesalahan rata-rata prediksi rating adalah sekitar 2.03 pada skala 1-10.
+
+Interpretasi:<br>
+- Content-Based Filtering menunjukkan performa yang baik dengan hit rate yang tinggi, artinya rekomendasi cukup akurat untuk item yang mirip.
+- Collaborative Filtering memiliki RMSE yang cukup besar, menunjukkan ruang untuk perbaikan, misalnya dengan memperbaiki data sparsity atau menggunakan algoritma prediksi lain.
 
 
 
-
-
-
-
-
-
-
-
+### **References**
