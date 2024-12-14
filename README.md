@@ -15,8 +15,8 @@ Pengguna sering menghadapi tantangan dalam memilih obat yang tepat karena banyak
 2. Membantu dokter dan pasien dalam memilih obat yang lebih efektif dan aman dengan memanfaatkan pendekatan algoritma Content-Based Filtering dan Collaborative Filtering.
 
 **Solution Approach**<br>
-* Content-Based Filtering digunakan untuk memberikan rekomendasi berdasarkan karakteristik obat, seperti efek samping dan kejadian medis yang telah tercatat.
-* Collaborative Filtering digunakan untuk memberikan rekomendasi berdasarkan preferensi pengguna lain yang memiliki riwayat medis serupa.
+* Content-Based Filtering digunakan untuk memberikan rekomendasi berdasarkan karakteristik obat, seperti efek samping dan kejadian medis yang telah tercatat [[6]](https://media.neliti.com/media/publications/263309-comparing-content-based-and-collaborativ-eb8f08d0.pdf).
+* Collaborative Filtering digunakan untuk memberikan rekomendasi berdasarkan preferensi pengguna lain yang memiliki riwayat medis serupa [[8]](https://jurnal.stmik-mi.ac.id/index.php/jcb/article/view/124).
 
 ## **Data Understanding**
 **Exploratory Data Analysis (EDA) & Data Visualization**<br>
