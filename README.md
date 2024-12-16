@@ -120,7 +120,7 @@ Grafik kedua menunjukkan bahwa kejadian-kejadian buruk atau serius (seperti kema
 - Poin penting: Dataset ini lebih banyak menyertakan informasi tentang kejadian medis yang terjadi setelah penggunaan obat, serta hubungan obat dengan reaksi tubuh pasien.
 - Relevansi: Dataset ini cocok untuk Content-Based Filtering, karena kita dapat memberikan rekomendasi obat berdasarkan deskripsi efek samping dan kejadian medis yang terkait. Misalnya, jika pasien memiliki riwayat tertentu, kita dapat merekomendasikan obat yang tidak memiliki efek samping yang serupa.
 
-**B. Dataeset Drug Rating**<br>
+**B. Dataset Drug Rating**<br>
 **1. Struktur dataset**<br>
 Dataset "Drug Rating" terdiri dari 15 kolom dengan 3293 baris. Semua kolom bertipe ```object``` (```string```), yang menunjukkan bahwa semua informasi  bersifat kategorikal. Berikut detail variabel fitur dataset ini:<br>
       Kolom 3351, 2, 3, ... 13, 14, sampai kolom 15<br>
