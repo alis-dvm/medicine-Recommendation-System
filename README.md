@@ -28,7 +28,7 @@ Sebelum membangun model, kami melakukan eksplorasi data untuk memahami struktur 
 
 Dalam proyek ini, kami menggunakan 2 dataset yang berasal dari database *drugs.com* dan *druglib.com* yang dapat di akses pada link [ini](https://github.com/DatasetsLibrary/RECOMED?tab=readme-ov-file).
 
-**A. Dataeset Events**<br>
+**A. Dataset Events**<br>
 **1. Struktur dataset**<br>
 Dataset "Events" terdiri dari 5 kolom dengan 2486 baris. Mayoritas kolom bertipe ```object``` kecuali kolom *Age* bertipe ```int64```. Berikut detail variabel fitur dataset ini:<br>    
    - ```DrugName```: Nama obat yang digunakan (misalnya "Abilify").<br>
@@ -800,6 +800,6 @@ Interpretasi:<br>
 
 [7] Poonam, B., Thorat., R., M., Goudar., Sunita, Barve. (2015). Survey on Collaborative Filtering, Content-based Filtering and Hybrid Recommendation System. International Journal of Computer Applications.  https://doi10.5120/19308-0760<br>
 
-[8] Wijaya, A., & Alfian, D. (2018). Sistem Rekomendasi Laptop menggunakan Collaborative Filtering dan Content-Based Filtering. Jurnal Computech &Amp; Bisnis (e-Journal), 12(1), 11–27. Retrieved from https://jurnal.stmik-mi.ac.id/index.php/jcb/article/view/124<br>
+[8] Wijaya, A., & Alfian, D. (2018). Sistem Rekomendasi Laptop menggunakan Collaborative Filtering dan Content-Based Filtering. Jurnal Computech & Bisnis (e-Journal), 12(1), 11–27. Retrieved from https://jurnal.stmik-mi.ac.id/index.php/jcb/article/view/124<br>
 
 
