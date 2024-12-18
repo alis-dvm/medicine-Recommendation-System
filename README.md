@@ -1,4 +1,9 @@
+*Contoh yang salah, terkait:* <br>
 # **Medicine Recommendation System**
+*Coba cari mana yang salah????* <br>
+*Tidak ada kata "gagal" yang ada adalah "sukses" atau "belajar lagi"* <br>
+*SEMANGAT !!!!!* <br>
+
 
 ## **Project Overview**
 Dalam proyek ini, kami membangun sistem rekomendasi medis menggunakan pendekatan *Content-Based Filtering* dan *Collaborative Filtering* untuk membantu pengguna, seperti pasien, dokter dan apoteker, dalam memberikan rekomendasi obat berdasarkan fitur karakteristik obat yang relevan serta riwayat data pengguna. Sistem ini bertujuan untuk memberikan saran pengobatan yang lebih akurat dengan memperhitungkan data medis pasien dan preferensi obat.
