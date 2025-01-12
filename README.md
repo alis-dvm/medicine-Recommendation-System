@@ -534,7 +534,7 @@ Pembagian dataset menjadi data pelatihan dan pengujian telah selesai untuk datas
 6. Train-Test Split: Kedua dataset telah dibagi menjadi data pelatihan dan pengujian.<br>
 Data sudah siap untuk digunakan dalam membangun sistem rekomendasi berbasis content-based filtering dan collaborative filtering.
 
-## **Modeling**<br>
+## **Modeling and Results**<br>
 Sistem rekomendasi adalah alat penting dalam berbagai domain, termasuk layanan kesehatan, e-commerce, dan hiburan, untuk membantu pengguna menemukan informasi atau item yang relevan. Dua pendekatan utama yang digunakan dalam pengembangan sistem ini adalah *Content-Based Filtering* dan *Collaborative Filtering*. Setiap pendekatan memiliki mekanisme, keunggulan, dan tantangan yang unik, yang penting untuk dipertimbangkan dalam membangun sistem rekomendasi obat.<br>
 
 **A. Content-Based Filtering** <br>
